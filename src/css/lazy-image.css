@@ -1,0 +1,98 @@
+/* Styles pour le composant LazyImage */
+
+.lazy-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.lazy-image.loading {
+  opacity: 0;
+}
+
+.lazy-image.loaded {
+  opacity: 1;
+}
+
+.lazy-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(45deg, #f0f0f0, #e8e8e8);
+  border-radius: 8px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.loading-spinner {
+  font-size: 2rem;
+  animation: spin 1s linear infinite;
+  opacity: 0.5;
+}
+
+.error-placeholder {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+@keyframes pulse {
+  0% {
+    background: linear-gradient(45deg, #f0f0f0, #e8e8e8);
+  }
+  50% {
+    background: linear-gradient(45deg, #e8e8e8, #f0f0f0);
+  }
+  100% {
+    background: linear-gradient(45deg, #f0f0f0, #e8e8e8);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Styles spécifiques pour les cartes Pokemon */
+.pokemon-image-container .lazy-placeholder {
+  min-height: 150px;
+}
+
+.pokemon-image-container .lazy-image {
+  transition: opacity 0.3s ease-in-out, transform 0.2s ease;
+}
+
+.pokemon-card:hover .lazy-image.loaded {
+  transform: scale(1.05);
+}
+
+/* Styles spécifiques pour la page de détails */
+.pokemon-detail-image .lazy-placeholder {
+  min-height: 200px;
+  width: 200px;
+  margin: 0 auto;
+}
+
+.pokemon-detail-image .lazy-image {
+  max-width: 200px;
+  height: auto;
+}
+
+@media (max-width: 768px) {
+  .pokemon-detail-image .lazy-placeholder {
+    min-height: 150px;
+    width: 150px;
+  }
+  
+  .pokemon-detail-image .lazy-image {
+    max-width: 150px;
+  }
+}
