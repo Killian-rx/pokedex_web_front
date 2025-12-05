@@ -1,13 +1,18 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { Autocomplete, TextField, InputAdornment, Paper, Box, Typography, Chip } from '@mui/material';
 import { Search } from '@mui/icons-material';
 import { useLanguage } from "../contexts/LanguageContext";
 import pokemonData from "../data/pokemon.json";
 import typesData from "../data/types.json";
 
-const SearchBar = ({ onSearch }) => {
-    const [inputValue, setInputValue] = useState("");
+const SearchBar = ({ onSearch, searchValue = "" }) => {
+    const [inputValue, setInputValue] = useState(searchValue);
     const { currentLanguage } = useLanguage();
+
+    // Synchroniser inputValue avec searchValue venant du parent
+    React.useEffect(() => {
+        setInputValue(searchValue);
+    }, [searchValue]);
 
     // Fonction pour obtenir le nom du Pokémon dans la langue sélectionnée
     const getPokemonName = (pokemon) => {

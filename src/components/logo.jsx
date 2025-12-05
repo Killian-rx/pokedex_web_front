@@ -1,10 +1,20 @@
 import React from "react";
+import { useNavigate } from 'react-router-dom';
 import { CatchingPokemon } from '@mui/icons-material';
 import '../css/logo.css';
 
-const Logo = () => {
+const Logo = ({ onReset }) => {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate('/');
+        if (onReset) {
+            onReset();
+        }
+    };
+
     return (
-        <div className="logo-container">
+        <div className="logo-container" onClick={handleClick}>
             <CatchingPokemon className="logo-icon" />
             <h1 className="logo-text">
                 Pokédex

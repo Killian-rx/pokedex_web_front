@@ -7,6 +7,12 @@ const LazyImage = ({ src, alt, className, placeholder = null }) => {
   const imgRef = useRef();
 
   useEffect(() => {
+    // Si IntersectionObserver n'est pas disponible (tests), charger immédiatement
+    if (typeof IntersectionObserver === 'undefined') {
+      setIsInView(true);
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         const [entry] = entries;
