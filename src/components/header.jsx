@@ -24,6 +24,12 @@ const Header = ({ onSearch }) => {
     }
   };
 
+  const handleThemeToggle = (event) => {
+    toggleDarkMode();
+    // Enlever le focus du bouton après le clic
+    event.currentTarget.blur();
+  };
+
   return (
     <AppBar 
       position="fixed" 
@@ -44,11 +50,12 @@ const Header = ({ onSearch }) => {
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <IconButton 
-              onClick={toggleDarkMode}
+              onClick={handleThemeToggle}
               color="inherit"
               sx={{ 
                 bgcolor: 'action.hover',
-                '&:hover': { bgcolor: 'action.selected' }
+                '&:hover': { bgcolor: 'action.selected' },
+                '&:focus': { bgcolor: 'action.hover' }
               }}
             >
               {isDarkMode ? <LightMode /> : <DarkMode />}
