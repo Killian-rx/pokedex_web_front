@@ -1,10 +1,14 @@
 import React, { useState } from "react";
-import { AppBar, Toolbar, Box, Container } from '@mui/material';
+import { AppBar, Toolbar, Box, Container, IconButton } from '@mui/material';
+import { DarkMode, LightMode } from '@mui/icons-material';
+import { useThemeMode } from '../contexts/ThemeModeContext.jsx';
 import Logo from "./logo.jsx";
 import ChooseLanguage from "./choose_language.jsx";
 import SearchBar from "./search_bar.jsx";
 
 const Header = ({ onSearch }) => {
+  const { isDarkMode, toggleDarkMode } = useThemeMode();
+
   const handleSearch = (searchTerm) => {
     if (onSearch) {
       onSearch(searchTerm);
@@ -16,9 +20,10 @@ const Header = ({ onSearch }) => {
       position="fixed" 
       elevation={1}
       sx={{ 
-        bgcolor: 'rgba(255, 255, 255, 0.98)',
+        bgcolor: 'background.paper',
         backdropFilter: 'blur(20px)',
-        borderBottom: '1px solid rgba(224, 224, 224, 0.3)',
+        borderBottom: '1px solid',
+        borderBottomColor: 'divider',
         color: 'text.primary'
       }}
     >
@@ -28,7 +33,19 @@ const Header = ({ onSearch }) => {
           <Box sx={{ flex: 1, maxWidth: 400, mx: 2 }}>
             <SearchBar onSearch={handleSearch} />
           </Box>
-          <ChooseLanguage />
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <IconButton 
+              onClick={toggleDarkMode}
+              color="inherit"
+              sx={{ 
+                bgcolor: 'action.hover',
+                '&:hover': { bgcolor: 'action.selected' }
+              }}
+            >
+              {isDarkMode ? <LightMode /> : <DarkMode />}
+            </IconButton>
+            <ChooseLanguage />
+          </Box>
         </Container>
       </Toolbar>
     </AppBar>

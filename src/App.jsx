@@ -1,19 +1,31 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { ThemeProvider } from '@mui/material/styles'
 import { CssBaseline, Box } from '@mui/material'
-import theme from './theme/theme.js'
+import createCustomTheme from './theme/theme.js'
+import { ThemeModeProvider, useThemeMode } from './contexts/ThemeModeContext.jsx'
 import HomePage from './pages/HomePage.jsx'
 import DetailsPage from './pages/DetailsPage.jsx'
 import Header from './components/header.jsx'
 import { LanguageProvider } from './contexts/LanguageContext.jsx'
 
-function App() {
+function AppContent() {
   const [searchTerm, setSearchTerm] = useState('');
+  const { isDarkMode } = useThemeMode();
+  const theme = createCustomTheme(isDarkMode ? 'dark' : 'light');
 
   const handleSearch = (term) => {
     setSearchTerm(term);
   };
+
+  // Ajouter la classe dark-mode au body
+  React.useEffect(() => {
+    if (isDarkMode) {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+  }, [isDarkMode]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -32,7 +44,15 @@ function App() {
         </Router>
       </LanguageProvider>
     </ThemeProvider>
-  )
+  );
 }
 
-export default App
+function App() {
+  return (
+    <ThemeModeProvider>
+      <AppContent />
+    </ThemeModeProvider>
+  );
+}
+
+export default App;

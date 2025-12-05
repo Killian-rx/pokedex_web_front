@@ -1,0 +1,128 @@
+/* Search Bar Styles */
+.search-bar-container {
+  width: 100%;
+}
+
+.search-input {
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.search-input:hover .search-input-field {
+  border-color: #3b82f6;
+}
+
+.search-input:focus-within .search-input-field {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+.search-input-field {
+  padding: 8px 12px;
+  padding-left: 40px;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 0.9rem;
+}
+
+.search-input-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #64748b;
+}
+
+.search-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.search-suggestion-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.search-suggestion-item:hover {
+  background-color: #f8fafc;
+}
+
+.search-suggestion-item:last-child {
+  border-bottom: none;
+}
+
+.search-suggestion-image {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.search-suggestion-info {
+  flex: 1;
+}
+
+.search-suggestion-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.search-suggestion-id {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.search-suggestion-type-chip {
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: white;
+  font-weight: 500;
+}
+
+.search-suggestion-type-label {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+/* Dark mode */
+.dark-mode .search-input {
+  background-color: #1e293b;
+  border-color: #374151;
+}
+
+.dark-mode .search-suggestions {
+  background-color: #1e293b;
+  border-color: #374151;
+}
+
+.dark-mode .search-suggestion-item {
+  border-bottom-color: #374151;
+}
+
+.dark-mode .search-suggestion-item:hover {
+  background-color: #374151;
+}
+
+.dark-mode .search-suggestion-id,
+.dark-mode .search-suggestion-type-label {
+  color: #94a3b8;
+}

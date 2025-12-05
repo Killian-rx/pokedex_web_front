@@ -1,24 +1,25 @@
 import { createTheme } from '@mui/material/styles';
 
-const theme = createTheme({
+const createCustomTheme = (mode) => createTheme({
   palette: {
+    mode,
     primary: {
-      main: '#3b82f6', // Bleu moderne
-      light: '#60a5fa',
-      dark: '#1e40af',
+      main: mode === 'dark' ? '#60a5fa' : '#3b82f6',
+      light: mode === 'dark' ? '#93c5fd' : '#60a5fa',
+      dark: mode === 'dark' ? '#2563eb' : '#1e40af',
     },
     secondary: {
-      main: '#10b981', // Vert moderne
-      light: '#34d399',
-      dark: '#047857',
+      main: mode === 'dark' ? '#34d399' : '#10b981',
+      light: mode === 'dark' ? '#6ee7b7' : '#34d399',
+      dark: mode === 'dark' ? '#10b981' : '#047857',
     },
     background: {
-      default: '#f8fafc',
-      paper: '#ffffff',
+      default: mode === 'dark' ? '#0f172a' : '#f8fafc',
+      paper: mode === 'dark' ? '#1e293b' : '#ffffff',
     },
     text: {
-      primary: '#1e293b',
-      secondary: '#64748b',
+      primary: mode === 'dark' ? '#f1f5f9' : '#1e293b',
+      secondary: mode === 'dark' ? '#94a3b8' : '#64748b',
     },
   },
   typography: {
@@ -60,10 +61,14 @@ const theme = createTheme({
     MuiCard: {
       styleOverrides: {
         root: {
-          boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+          boxShadow: mode === 'dark' 
+            ? '0 1px 3px rgba(0, 0, 0, 0.3)' 
+            : '0 1px 3px rgba(0, 0, 0, 0.1)',
           borderRadius: '12px',
           '&:hover': {
-            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+            boxShadow: mode === 'dark'
+              ? '0 4px 12px rgba(0, 0, 0, 0.4)'
+              : '0 4px 12px rgba(0, 0, 0, 0.15)',
           },
         },
       },
@@ -94,10 +99,23 @@ const theme = createTheme({
         },
       },
     },
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: mode === 'dark' 
+            ? 'rgba(30, 41, 59, 0.95)' 
+            : 'rgba(255, 255, 255, 0.98)',
+          backdropFilter: 'blur(20px)',
+          borderBottom: mode === 'dark'
+            ? '1px solid rgba(71, 85, 105, 0.3)'
+            : '1px solid rgba(224, 224, 224, 0.3)',
+        },
+      },
+    },
   },
   shape: {
     borderRadius: 8,
   },
 });
 
-export default theme;
+export default createCustomTheme;

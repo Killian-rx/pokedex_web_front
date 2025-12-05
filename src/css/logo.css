@@ -1,0 +1,34 @@
+/* Logo Styles */
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-icon {
+  font-size: 32px;
+  color: #3b82f6;
+  animation: spin 3s linear infinite;
+}
+
+.logo-text {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #3b82f6;
+  margin: 0;
+}
+
+@keyframes spin {
+  0% { 
+    transform: rotate(0deg); 
+  }
+  100% { 
+    transform: rotate(360deg); 
+  }
+}
+
+/* Dark mode */
+.dark-mode .logo-icon,
+.dark-mode .logo-text {
+  color: #60a5fa;
+}

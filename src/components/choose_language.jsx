@@ -33,12 +33,12 @@ const ChooseLanguage = () => {
                 endIcon={<KeyboardArrowDown />}
                 onClick={handleClick}
                 sx={{
-                    bgcolor: 'white',
+                    bgcolor: 'background.paper',
                     color: 'text.primary',
                     border: '1px solid',
                     borderColor: 'divider',
                     '&:hover': {
-                        bgcolor: 'grey.50',
+                        bgcolor: 'action.hover',
                         borderColor: 'primary.main',
                     },
                     textTransform: 'none',
@@ -59,6 +59,14 @@ const ChooseLanguage = () => {
                 transformOrigin={{
                     vertical: 'top',
                     horizontal: 'right',
+                }}
+                PaperProps={{
+                    sx: {
+                        bgcolor: 'background.paper',
+                        border: '1px solid',
+                        borderColor: 'divider',
+                        boxShadow: 3
+                    }
                 }}
             >
                 {availableLanguages.map((language) => (

@@ -69,27 +69,20 @@ const ListePokemon = ({ searchTerm }) => {
                     </Alert>
                 </Box>
             ) : (
-                <Grid 
-                    container 
-                    spacing={2} 
-                    sx={{ 
-                        alignItems: 'stretch',
-                        '& .MuiGrid-item': {
-                            display: 'flex',
-                            flexDirection: 'column'
-                        }
-                    }}
-                >
+                <Box sx={{ 
+                    display: 'grid',
+                    gridTemplateColumns: {
+                        xs: '1fr',
+                        sm: 'repeat(2, 1fr)',
+                        md: 'repeat(3, 1fr)',
+                        lg: 'repeat(5, 1fr)',
+                        xl: 'repeat(5, 1fr)'
+                    },
+                    gap: 2,
+                    alignItems: 'stretch'
+                }}>
                     {filteredPokemon.slice(0, 50).map((pokemon) => (
-                        <Grid 
-                            item 
-                            xs={12} 
-                            sm={6} 
-                            md={4} 
-                            lg={3} 
-                            xl={2.4}
-                            key={pokemon.id}
-                        >
+                        <Box key={pokemon.id}>
                             <PokemonCard 
                                 pokemon={{
                                     id: pokemon.id,
@@ -98,9 +91,9 @@ const ListePokemon = ({ searchTerm }) => {
                                     types: pokemon.types.map(type => getTypeInfo(type))
                                 }} 
                             />
-                        </Grid>
+                        </Box>
                     ))}
-                </Grid>
+                </Box>
             )}
         </Container>
     );
