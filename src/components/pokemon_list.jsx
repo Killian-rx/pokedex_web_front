@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from "react";
-import { Grid, Typography, Container, Box, Alert, CircularProgress } from '@mui/material';
+import { Typography, Container, Box, Alert, CircularProgress } from '@mui/material';
 import PokemonCard from "./pokemon_card.jsx";
 import typesData from "../data/types.json";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -127,7 +127,7 @@ const ListePokemon = ({ searchTerm }) => {
                 <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
                     <Alert severity="info" sx={{ maxWidth: 400 }}>
                         <Typography variant="body1" sx={{ mb: 1 }}>
-                            Aucun Pokémon trouvé pour "{searchTerm}"
+                            Aucun Pokémon trouvé pour &quot;{searchTerm}&quot;
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
                             Essayez de rechercher par nom, numéro ou type.

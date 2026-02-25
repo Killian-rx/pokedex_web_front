@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useCallback, useEffect } from "react";
 import { Autocomplete, TextField, InputAdornment, Paper, Box, Typography, Chip } from '@mui/material';
 import { Search } from '@mui/icons-material';
 import { useLanguage } from "../contexts/LanguageContext";
@@ -42,21 +42,21 @@ const SearchBar = ({ onSearch, searchValue = "" }) => {
     }, [searchValue]);
 
     // Fonction pour obtenir le nom du Pokémon dans la langue sélectionnée
-    const getPokemonName = (pokemon) => {
+    const getPokemonName = useCallback((pokemon) => {
         if (pokemon.names) {
             return pokemon.names[currentLanguage] || pokemon.names.en || `Pokémon #${pokemon.id}`;
         }
         return `Pokémon #${pokemon.id}`;
-    };
+    }, [currentLanguage]);
 
     // Fonction pour obtenir les informations du type
-    const getTypeInfo = (typeName) => {
+    const getTypeInfo = useCallback((typeName) => {
         const typeInfo = typesData[typeName];
         return {
             name: typeInfo?.translations?.[currentLanguage] || typeInfo?.translations?.en || typeName,
             backgroundColor: typeInfo?.backgroundColor || "#68A090"
         };
-    };
+    }, [currentLanguage]);
 
     // Créer les options de recherche
     const searchOptions = useMemo(() => {
@@ -88,7 +88,7 @@ const SearchBar = ({ onSearch, searchValue = "" }) => {
         });
 
         return options;
-    }, [currentLanguage]);
+    }, [pokemonData, getPokemonName, getTypeInfo]);
 
     const handleInputChange = (event, newInputValue) => {
         setInputValue(newInputValue);

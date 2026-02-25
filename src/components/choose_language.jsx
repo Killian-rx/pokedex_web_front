@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from "react";
-import { Button, Menu, MenuItem, ListItemIcon, Typography } from '@mui/material';
+import { Button, Menu, MenuItem, Typography } from '@mui/material';
 import { Language, KeyboardArrowDown } from '@mui/icons-material';
 import { useLanguage } from "../contexts/LanguageContext";
 

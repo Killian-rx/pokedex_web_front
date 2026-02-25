@@ -38,7 +38,7 @@ vi.mock('../data/types.json', () => ({
 }))
 
 // Wrapper pour fournir les contextes nécessaires
-const SearchBarWrapper = ({ children, onSearch }) => {
+const SearchBarWrapper = ({ onSearch }) => {
   const theme = createCustomTheme('light')
   return (
     <ThemeProvider theme={theme}>

@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
 import { ThemeProvider } from '@mui/material/styles'
@@ -52,7 +52,7 @@ vi.mock('../data/types.json', () => ({
 }))
 
 // Wrapper pour fournir les contextes nécessaires
-const PokemonListWrapper = ({ children, searchTerm }) => {
+const PokemonListWrapper = ({ searchTerm }) => {
   const theme = createCustomTheme('light')
   return (
     <BrowserRouter>

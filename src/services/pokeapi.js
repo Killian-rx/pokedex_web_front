@@ -125,6 +125,7 @@ export async function getPokemonWithTranslations(id) {
 /**
  * Récupère une liste de Pokémon avec leurs noms traduits
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- language param reserved for future use
 export async function getPokemonListWithTranslations(limit = 151, offset = 0, language = 'en') {
   try {
     const list = await getPokemonList(limit, offset);

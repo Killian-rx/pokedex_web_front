@@ -65,6 +65,7 @@ const LazyImage = ({ src, alt, className, placeholder = null }) => {
       )}
       
       {isInView && (
+        // eslint-disable-next-line @next/next/no-img-element -- Custom lazy loading with IntersectionObserver
         <img
           src={src}
           alt={alt}
