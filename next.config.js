@@ -1,9 +1,22 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  // Support for Emotion (MUI)
   compiler: {
     emotion: true,
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'raw.githubusercontent.com',
+        pathname: '/PokeAPI/sprites/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'pokeapi.co',
+        pathname: '/**',
+      },
+    ],
   },
 }
 

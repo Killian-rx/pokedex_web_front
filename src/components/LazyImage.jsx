@@ -1,106 +1,64 @@
 'use client'
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react'
+import Image from 'next/image'
 
-const LazyImage = ({ src, alt, className, placeholder = null }) => {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [isInView, setIsInView] = useState(false);
-  const [hasError, setHasError] = useState(false);
-  const imgRef = useRef();
+// Placeholder blur (petit carré gris en base64 pour affichage pendant le chargement)
+const BLUR_DATA_URL = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjgiIGhlaWdodD0iMTI4IiB2aWV3Qm94PSIwIDAgMTI4IDEyOCI+PHJlY3Qgd2lkdGg9IjEyOCIgaGVpZ2h0PSIxMjgiIGZpbGw9IiNlOGU4ZTgiLz48L3N2Zz4='
 
-  useEffect(() => {
-    // Si IntersectionObserver n'est pas disponible (tests), charger immédiatement
-    if (typeof IntersectionObserver === 'undefined') {
-      setIsInView(true);
-      return;
-    }
+const LazyImage = ({
+  src,
+  alt,
+  className,
+  style = {},
+  width = 128,
+  height = 128,
+  priority = false,
+}) => {
+  const [hasError, setHasError] = useState(false)
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const [entry] = entries;
-        if (entry.isIntersecting) {
-          setIsInView(true);
-          observer.disconnect();
-        }
-      },
-      {
-        threshold: 0.1,
-        rootMargin: '50px'
-      }
-    );
-
-    if (imgRef.current) {
-      observer.observe(imgRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
-  const handleLoad = () => {
-    setIsLoaded(true);
-  };
-
-  const handleError = () => {
-    setHasError(true);
-    setIsLoaded(true);
-  };
+  if (hasError) {
+    return (
+      <div
+        className={className}
+        style={{
+          width,
+          height,
+          backgroundColor: '#f8d7da',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: '#721c24',
+          fontSize: '0.9rem',
+          ...style,
+        }}
+      >
+        Image non disponible
+      </div>
+    )
+  }
 
   return (
-    <div ref={imgRef} className={className}>
-      {!isInView && (
-        <div 
-          className="lazy-placeholder"
-          style={{
-            width: '100%',
-            height: '100%',
-            backgroundColor: '#f0f0f0',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            minHeight: '150px'
-          }}
-        >
-          {placeholder || <div className="loading-spinner">⚪</div>}
-        </div>
-      )}
-      
-      {isInView && (
-        // eslint-disable-next-line @next/next/no-img-element -- Custom lazy loading with IntersectionObserver
-        <img
-          src={src}
-          alt={alt}
-          className={`lazy-image ${isLoaded ? 'loaded' : 'loading'}`}
-          onLoad={handleLoad}
-          onError={handleError}
-          style={{
-            opacity: isLoaded ? 1 : 0,
-            transition: 'opacity 0.3s ease-in-out',
-            width: '100%',
-            height: 'auto',
-            display: hasError ? 'none' : 'block'
-          }}
-        />
-      )}
-      
-      {hasError && (
-        <div 
-          className="error-placeholder"
-          style={{
-            width: '100%',
-            height: '150px',
-            backgroundColor: '#f8d7da',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: '#721c24',
-            fontSize: '0.9rem'
-          }}
-        >
-          Image non disponible
-        </div>
-      )}
+    <div className={className} style={{ position: 'relative', overflow: 'hidden', ...style }}>
+      <Image
+        src={src}
+        alt={alt}
+        width={width}
+        height={height}
+        sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 20vw"
+        loading={priority ? 'eager' : 'lazy'}
+        priority={priority}
+        placeholder="blur"
+        blurDataURL={BLUR_DATA_URL}
+        onError={() => setHasError(true)}
+        style={{
+          width: '100%',
+          height: 'auto',
+          objectFit: 'contain',
+        }}
+      />
     </div>
-  );
-};
+  )
+}
 
-export default LazyImage;
+export default LazyImage

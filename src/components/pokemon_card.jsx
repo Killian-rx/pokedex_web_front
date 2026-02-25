@@ -6,7 +6,7 @@ import { Card, CardContent, Typography, Chip, Box } from '@mui/material';
 import LazyImage from './LazyImage.jsx';
 import '../css/pokemon_card.css';
 
-const PokemonCard = ({ pokemon }) => {
+const PokemonCard = ({ pokemon, priority = false }) => {
   if (!pokemon.id) {
     return null;
   }
@@ -23,6 +23,7 @@ const PokemonCard = ({ pokemon }) => {
             src={pokemon.image} 
             alt={pokemon.name}
             className="pokemon-card-image"
+            priority={priority}
           />
         </Box>
       </Box>

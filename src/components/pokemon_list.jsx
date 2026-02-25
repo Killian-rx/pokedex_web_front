@@ -147,7 +147,7 @@ const ListePokemon = ({ searchTerm }) => {
                     gap: 2,
                     alignItems: 'stretch'
                 }}>
-                    {filteredPokemon.slice(0, 50).map((pokemon) => (
+                    {filteredPokemon.slice(0, 50).map((pokemon, index) => (
                         <Box key={pokemon.id}>
                             <PokemonCard 
                                 pokemon={{
@@ -155,7 +155,8 @@ const ListePokemon = ({ searchTerm }) => {
                                     name: getPokemonName(pokemon),
                                     image: pokemon.image,
                                     types: pokemon.types.map(type => getTypeInfo(type))
-                                }} 
+                                }}
+                                priority={index < 12}
                             />
                         </Box>
                     ))}

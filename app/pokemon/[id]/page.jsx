@@ -140,6 +140,8 @@ export default function DetailsPage() {
                 <LazyImage 
                   src={pokemon.image} 
                   alt={getPokemonName()}
+                  width={200}
+                  height={200}
                   style={{ maxWidth: 200, height: 'auto' }}
                 />
               </Box>
