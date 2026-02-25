@@ -13,7 +13,7 @@ export default function PokemonNotFound() {
           Pokémon introuvable
         </Typography>
         <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-          Le Pokémon que vous recherchez n'existe pas dans le Pokédex.
+          Le Pokémon que vous recherchez n&apos;existe pas dans le Pokédex.
         </Typography>
       </Box>
 
@@ -26,7 +26,7 @@ export default function PokemonNotFound() {
           size="large"
           sx={{ borderRadius: 2 }}
         >
-          Retour à l'accueil
+          Retour à l&apos;accueil
         </Button>
         <Button
           component={Link}

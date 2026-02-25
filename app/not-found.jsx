@@ -18,7 +18,7 @@ export default function NotFound() {
           Pokémon introuvable
         </Typography>
         <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-          Le Pokémon que vous recherchez n'existe pas ou a été déplacé.
+          Le Pokémon que vous recherchez n&apos;existe pas ou a été déplacé.
         </Typography>
       </Box>
 
@@ -30,7 +30,7 @@ export default function NotFound() {
           size="large"
           sx={{ borderRadius: 2 }}
         >
-          Retour à l'accueil
+          Retour à l&apos;accueil
         </Button>
         <Button
           variant="outlined"
