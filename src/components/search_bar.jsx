@@ -1,13 +1,40 @@
+'use client'
+
 import React, { useState, useMemo, useEffect } from "react";
 import { Autocomplete, TextField, InputAdornment, Paper, Box, Typography, Chip } from '@mui/material';
 import { Search } from '@mui/icons-material';
 import { useLanguage } from "../contexts/LanguageContext";
-import pokemonData from "../data/pokemon.json";
 import typesData from "../data/types.json";
+import { getPokemonListWithTranslations } from "../services/pokeapi.js";
 
 const SearchBar = ({ onSearch, searchValue = "" }) => {
     const [inputValue, setInputValue] = useState(searchValue);
+    const [pokemonData, setPokemonData] = useState([]);
     const { currentLanguage } = useLanguage();
+
+    // Charger les données des Pokémon pour l'autocomplétion
+    useEffect(() => {
+        const loadPokemon = async () => {
+            try {
+                const languageMap = {
+                    'fr': 'fr',
+                    'en': 'en',
+                    'ja': 'ja',
+                    'ko': 'ko',
+                    'de': 'de',
+                    'es': 'es',
+                    'it': 'it'
+                };
+                const apiLanguage = languageMap[currentLanguage] || 'en';
+                const data = await getPokemonListWithTranslations(151, 0, apiLanguage);
+                setPokemonData(data);
+            } catch (err) {
+                console.error('Error loading pokemon for search:', err);
+            }
+        };
+
+        loadPokemon();
+    }, [currentLanguage]);
 
     // Synchroniser inputValue avec searchValue venant du parent
     React.useEffect(() => {
@@ -102,8 +129,10 @@ const SearchBar = ({ onSearch, searchValue = "" }) => {
             .slice(0, 20);
     };
 
-    const renderOption = (props, option) => (
-        <Box component="li" {...props} sx={{ display: 'flex', alignItems: 'center', gap: 1, py: 1 }}>
+    const renderOption = (props, option) => {
+        const { key, ...otherProps } = props;
+        return (
+            <Box component="li" key={key} {...otherProps} sx={{ display: 'flex', alignItems: 'center', gap: 1, py: 1 }}>
             {option.type === 'pokemon' ? (
                 <>
                     <Box 
@@ -135,8 +164,9 @@ const SearchBar = ({ onSearch, searchValue = "" }) => {
                     </Typography>
                 </>
             )}
-        </Box>
-    );
+            </Box>
+        );
+    };
 
     return (
         <Autocomplete

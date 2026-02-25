@@ -1,20 +1,19 @@
+'use client'
+
 import React from "react";
-import { useNavigate } from 'react-router-dom';
+import Link from 'next/link';
 import { Card, CardContent, Typography, Chip, Box } from '@mui/material';
 import LazyImage from './LazyImage.jsx';
 import '../css/pokemon_card.css';
 
 const PokemonCard = ({ pokemon }) => {
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    if (pokemon.id) {
-      navigate(`/pokemon/${pokemon.id}`);
-    }
-  };
+  if (!pokemon.id) {
+    return null;
+  }
 
   return (
-    <Card className="pokemon-card" onClick={handleClick}>
+    <Link href={`/pokemon/${pokemon.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+      <Card className="pokemon-card" sx={{ cursor: 'pointer' }}>
       <Box className="pokemon-card-image-container">
         <Typography className="pokemon-card-id">
           #{String(pokemon.id).padStart(3, '0')}
@@ -48,6 +47,7 @@ const PokemonCard = ({ pokemon }) => {
         </Box>
       </CardContent>
     </Card>
+    </Link>
   );
 }
 

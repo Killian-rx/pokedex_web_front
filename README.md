@@ -27,7 +27,7 @@ npm run dev
 ### Production
 ```bash
 npm run build
-npm run preview
+npm start
 ```
 
 ### Tests
@@ -39,18 +39,25 @@ npm run test:coverage # Avec rapport de couverture
 
 ## Technologies utilisées
 
-- **Frontend Framework:** React 18 + Vite
+- **Frontend Framework:** React 19 + Next.js 15
 - **UI Library:** Material-UI (MUI)
-- **Routing:** React Router DOM
+- **Routing:** Next.js App Router
 - **State Management:** Context API
 - **Styling:** CSS Modules + MUI theming
 - **Testing:** Vitest + Testing Library
-- **Build Tool:** Vite
+- **Build Tool:** Next.js
 - **Package Manager:** npm
 
 ## Structure du projet
 
 ```
+app/                    # Next.js App Router
+├── layout.jsx         # Layout racine
+├── page.jsx           # Page d'accueil
+├── providers.jsx      # Providers client-side
+└── pokemon/
+    └── [id]/
+        └── page.jsx  # Page de détail Pokémon
 src/
 ├── components/          # Composants réutilisables
 │   ├── pokemon_card.jsx # Carte Pokémon
@@ -58,9 +65,6 @@ src/
 │   ├── search_bar.jsx   # Barre de recherche
 │   ├── header.jsx       # En-tête avec navigation
 │   └── logo.jsx         # Logo cliquable
-├── pages/              # Pages de l'application
-│   ├── HomePage.jsx    # Page d'accueil
-│   └── DetailsPage.jsx # Page de détail Pokémon
 ├── contexts/           # Contextes React
 │   ├── LanguageContext.jsx
 │   └── ThemeModeContext.jsx
@@ -121,9 +125,9 @@ Les styles utilisent une approche hybride :
 
 | Commande | Description |
 |----------|-------------|
-| `npm run dev` | Lance le serveur de développement |
-| `npm run build` | Build de production |
-| `npm run preview` | Prévisualise le build de production |
+| `npm run dev` | Lance le serveur de développement Next.js |
+| `npm run build` | Build de production Next.js |
+| `npm start` | Lance le serveur de production |
 | `npm test` | Lance les tests en mode watch |
 | `npm run test:run` | Exécute les tests une fois |
 | `npm run test:coverage` | Tests avec rapport de couverture |
@@ -143,4 +147,4 @@ Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
 
 ---
 
-*Développé avec React*
+*Développé avec Next.js et React*

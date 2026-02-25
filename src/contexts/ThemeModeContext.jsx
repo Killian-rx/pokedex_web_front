@@ -1,3 +1,5 @@
+'use client'
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const ThemeModeContext = createContext();
@@ -12,6 +14,10 @@ export const useThemeMode = () => {
 
 export const ThemeModeProvider = ({ children }) => {
   const [isDarkMode, setIsDarkMode] = useState(() => {
+    // Vérifier si on est côté client
+    if (typeof window === 'undefined') {
+      return false; // Valeur par défaut côté serveur
+    }
     // Récupérer la préférence sauvegardée ou utiliser la préférence système
     const saved = localStorage.getItem('darkMode');
     if (saved !== null) {
@@ -23,12 +29,19 @@ export const ThemeModeProvider = ({ children }) => {
   const toggleDarkMode = () => {
     setIsDarkMode(prev => {
       const newValue = !prev;
-      localStorage.setItem('darkMode', JSON.stringify(newValue));
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('darkMode', JSON.stringify(newValue));
+      }
       return newValue;
     });
   };
 
   useEffect(() => {
+    // Vérifier si on est côté client
+    if (typeof window === 'undefined') {
+      return;
+    }
+    
     // Écouter les changements de préférence système
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const handleChange = (e) => {

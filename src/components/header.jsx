@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+'use client'
+
+import React, { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from 'next/navigation';
 import { AppBar, Toolbar, Box, Container, IconButton } from '@mui/material';
 import { DarkMode, LightMode } from '@mui/icons-material';
 import { useThemeMode } from '../contexts/ThemeModeContext.jsx';
@@ -6,22 +9,32 @@ import Logo from "./logo.jsx";
 import ChooseLanguage from "./choose_language.jsx";
 import SearchBar from "./search_bar.jsx";
 
-const Header = ({ onSearch }) => {
+const Header = () => {
   const { isDarkMode, toggleDarkMode } = useThemeMode();
-  const [searchValue, setSearchValue] = useState('');
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [searchValue, setSearchValue] = useState(searchParams.get('search') || '');
+
+  // Sync search value from URL
+  useEffect(() => {
+    const search = searchParams.get('search');
+    setSearchValue(search || '');
+  }, [searchParams]);
 
   const handleSearch = (searchTerm) => {
     setSearchValue(searchTerm);
-    if (onSearch) {
-      onSearch(searchTerm);
+    const params = new URLSearchParams(searchParams.toString());
+    if (searchTerm) {
+      params.set('search', searchTerm);
+    } else {
+      params.delete('search');
     }
+    router.push(`/?${params.toString()}`);
   };
 
   const handleReset = () => {
     setSearchValue('');
-    if (onSearch) {
-      onSearch('');
-    }
+    router.push('/');
   };
 
   const handleThemeToggle = (event) => {

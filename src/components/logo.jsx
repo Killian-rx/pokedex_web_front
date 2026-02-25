@@ -1,13 +1,15 @@
+'use client'
+
 import React from "react";
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { CatchingPokemon } from '@mui/icons-material';
 import '../css/logo.css';
 
 const Logo = ({ onReset }) => {
-    const navigate = useNavigate();
+    const router = useRouter();
 
     const handleClick = () => {
-        navigate('/');
+        router.push('/');
         if (onReset) {
             onReset();
         }

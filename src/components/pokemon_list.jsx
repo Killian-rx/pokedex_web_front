@@ -1,13 +1,47 @@
-import React from "react";
+'use client'
+
+import React, { useState, useEffect } from "react";
 import { Grid, Typography, Container, Box, Alert, CircularProgress } from '@mui/material';
 import PokemonCard from "./pokemon_card.jsx";
-import pokemonData from "../data/pokemon.json";
 import typesData from "../data/types.json";
 import { useLanguage } from "../contexts/LanguageContext";
+import { getPokemonListWithTranslations } from "../services/pokeapi.js";
 
 
 const ListePokemon = ({ searchTerm }) => {
     const { currentLanguage } = useLanguage();
+    const [pokemonData, setPokemonData] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const loadPokemon = async () => {
+            setIsLoading(true);
+            setError(null);
+            try {
+                // Mapper les codes de langue de l'app vers ceux de PokeAPI
+                const languageMap = {
+                    'fr': 'fr',
+                    'en': 'en',
+                    'ja': 'ja',
+                    'ko': 'ko',
+                    'de': 'de',
+                    'es': 'es',
+                    'it': 'it'
+                };
+                const apiLanguage = languageMap[currentLanguage] || 'en';
+                const data = await getPokemonListWithTranslations(151, 0, apiLanguage);
+                setPokemonData(data);
+            } catch (err) {
+                console.error('Error loading pokemon:', err);
+                setError('Erreur lors du chargement des Pokémon');
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        loadPokemon();
+    }, [currentLanguage]);
 
     // Fonction pour obtenir les informations du type depuis types.json
     const getTypeInfo = (typeName) => {
@@ -47,6 +81,38 @@ const ListePokemon = ({ searchTerm }) => {
         
         return false;
     });
+
+    if (isLoading) {
+        return (
+            <Container maxWidth="lg" sx={{ py: 8 }}>
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '50vh' }}>
+                    <Box sx={{ textAlign: 'center' }}>
+                        <CircularProgress size={60} />
+                        <Typography variant="h6" sx={{ mt: 2 }}>
+                            Chargement des Pokémon...
+                        </Typography>
+                    </Box>
+                </Box>
+            </Container>
+        );
+    }
+
+    if (error) {
+        return (
+            <Container maxWidth="lg" sx={{ py: 8 }}>
+                <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
+                    <Alert severity="error" sx={{ maxWidth: 400 }}>
+                        <Typography variant="body1" sx={{ mb: 1 }}>
+                            {error}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                            Veuillez réessayer plus tard.
+                        </Typography>
+                    </Alert>
+                </Box>
+            </Container>
+        );
+    }
 
     return (
         <Container maxWidth="lg" sx={{ py: 3 }}>
